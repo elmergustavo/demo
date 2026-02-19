@@ -87,9 +87,9 @@ class ProjectResource extends Resource
     }
 
     /** @return Builder<Project> */
-    public static function getEloquentQuery(): Builder
+    public static function getRecordRouteBindingEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()
+        return parent::getRecordRouteBindingEloquentQuery()
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);

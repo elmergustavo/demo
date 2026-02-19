@@ -35,6 +35,7 @@ class DepartmentForm
                     ->disabled()
                     ->dehydrated()
                     ->required()
+                    ->maxLength(255)
                     ->unique(Department::class, 'slug', ignoreRecord: true),
 
                 Select::make('parent_id')
@@ -46,6 +47,7 @@ class DepartmentForm
 
                 Textarea::make('description')
                     ->rows(3)
+                    ->maxLength(65535)
                     ->columnSpanFull(),
 
                 TextInput::make('budget')

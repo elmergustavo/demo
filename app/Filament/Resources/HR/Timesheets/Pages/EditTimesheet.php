@@ -16,4 +16,11 @@ class EditTimesheet extends EditRecord
             DeleteAction::make(),
         ];
     }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        $data['total_cost'] = (float) ($data['hours'] ?? 0) * (float) ($data['hourly_rate'] ?? 0);
+
+        return $data;
+    }
 }

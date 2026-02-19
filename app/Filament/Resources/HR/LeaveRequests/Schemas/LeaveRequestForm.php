@@ -71,6 +71,7 @@ class LeaveRequestForm
 
                         Textarea::make('reason')
                             ->required()
+                            ->maxLength(65535)
                             ->columnSpanFull(),
                     ]),
 
@@ -93,7 +94,8 @@ class LeaveRequestForm
                             ->relationship('approver', 'name')
                             ->searchable(),
 
-                        Textarea::make('reviewer_notes'),
+                        Textarea::make('reviewer_notes')
+                            ->maxLength(65535),
                     ]),
             ]);
     }

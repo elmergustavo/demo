@@ -52,6 +52,7 @@ class ProjectForm
                                     ->disabled()
                                     ->dehydrated()
                                     ->required()
+                                    ->maxLength(255)
                                     ->unique(Project::class, 'slug', ignoreRecord: true),
 
                                 RichEditor::make('description')

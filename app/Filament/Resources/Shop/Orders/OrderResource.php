@@ -68,9 +68,12 @@ class OrderResource extends Resource
     }
 
     /** @return Builder<Order> */
-    public static function getEloquentQuery(): Builder
+    public static function getRecordRouteBindingEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->withoutGlobalScope(SoftDeletingScope::class);
+        return parent::getRecordRouteBindingEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 
     public static function getGloballySearchableAttributes(): array

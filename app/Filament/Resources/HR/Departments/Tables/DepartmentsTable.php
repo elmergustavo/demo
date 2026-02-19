@@ -18,6 +18,7 @@ use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 
 class DepartmentsTable
 {
@@ -73,7 +74,10 @@ class DepartmentsTable
                         ->action(fn (Department $record) => $record->update(['is_active' => ! $record->is_active])),
                     ReplicateAction::make()
                         ->requiresConfirmation()
-                        ->excludeAttributes(['id', 'slug', 'employees_count']),
+                        ->excludeAttributes(['id', 'employees_count'])
+                        ->beforeReplicaSaved(function (Department $replica): void {
+                            $replica->slug = Str::slug($replica->name) . '-' . Str::random(5);
+                        }),
                     DeleteAction::make()
                         ->action(function (): void {
                             Notification::make()

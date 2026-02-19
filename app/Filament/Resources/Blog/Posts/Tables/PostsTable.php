@@ -52,7 +52,7 @@ class PostsTable
                         'success' => 'Published',
                     ]),
 
-                TextColumn::make('category.name')
+                TextColumn::make('postCategory.name')
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

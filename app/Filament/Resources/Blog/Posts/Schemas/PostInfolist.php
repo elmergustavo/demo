@@ -35,7 +35,7 @@ class PostInfolist
                                     Group::make([
                                         TextEntry::make('author.name')
                                             ->placeholder('No author'),
-                                        TextEntry::make('category.name')
+                                        TextEntry::make('postCategory.name')
                                             ->placeholder('Uncategorized'),
                                         SpatieTagsEntry::make('tags'),
                                     ]),

@@ -94,6 +94,7 @@ class TimesheetForm
 
                         Textarea::make('description')
                             ->rows(2)
+                            ->maxLength(65535)
                             ->columnSpanFull(),
                     ]),
             ]);

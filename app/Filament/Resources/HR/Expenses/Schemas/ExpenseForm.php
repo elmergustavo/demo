@@ -31,7 +31,8 @@ class ExpenseForm
                             ->default(fn () => 'EXP-' . str_pad((string) random_int(1, 999999), 6, '0', STR_PAD_LEFT))
                             ->disabled()
                             ->dehydrated()
-                            ->required(),
+                            ->required()
+                            ->maxLength(255),
 
                         Select::make('employee_id')
                             ->relationship('employee', 'name')
@@ -59,6 +60,7 @@ class ExpenseForm
 
                         Textarea::make('description')
                             ->required()
+                            ->maxLength(65535)
                             ->columnSpanFull(),
                     ]),
 
@@ -82,7 +84,8 @@ class ExpenseForm
                             ])
                             ->schema([
                                 TextInput::make('description')
-                                    ->required(),
+                                    ->required()
+                                    ->maxLength(255),
 
                                 TextInput::make('quantity')
                                     ->integer()
@@ -142,6 +145,7 @@ class ExpenseForm
                             ->directory('expense-receipts'),
 
                         Textarea::make('notes')
+                            ->maxLength(65535)
                             ->columnSpanFull(),
                     ]),
             ]);

@@ -18,4 +18,20 @@ class EditExpense extends EditRecord
             DeleteAction::make(),
         ];
     }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        /** @var array<int, array<string, mixed>> $lines */
+        $lines = $this->data['expenseLines'] ?? [];
+
+        foreach ($lines as &$line) {
+            $line['amount'] = (int) ($line['quantity'] ?? 1) * (float) ($line['unit_price'] ?? 0);
+        }
+
+        $this->data['expenseLines'] = $lines;
+        $data['total_amount'] = collect($lines)
+            ->sum(fn (array $line): float => (float) $line['amount']);
+
+        return $data;
+    }
 }

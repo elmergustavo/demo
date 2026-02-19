@@ -38,7 +38,8 @@ class CreateExpense extends CreateRecord
                         ->default(fn () => 'EXP-' . str_pad((string) random_int(1, 999999), 6, '0', STR_PAD_LEFT))
                         ->disabled()
                         ->dehydrated()
-                        ->required(),
+                        ->required()
+                        ->maxLength(255),
 
                     Select::make('employee_id')
                         ->relationship('employee', 'name')
@@ -59,6 +60,7 @@ class CreateExpense extends CreateRecord
 
                     Textarea::make('description')
                         ->required()
+                        ->maxLength(65535)
                         ->columnSpanFull(),
 
                     TextEntry::make('policy_notice')
@@ -86,7 +88,8 @@ class CreateExpense extends CreateRecord
                         ])
                         ->schema([
                             TextInput::make('description')
-                                ->required(),
+                                ->required()
+                                ->maxLength(255),
 
                             TextInput::make('quantity')
                                 ->integer()
@@ -145,6 +148,7 @@ class CreateExpense extends CreateRecord
                         ->directory('expense-receipts'),
 
                     Textarea::make('notes')
+                        ->maxLength(65535)
                         ->columnSpanFull(),
                 ])
                 ->columns(2),
@@ -154,6 +158,17 @@ class CreateExpense extends CreateRecord
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $data['status'] = ExpenseStatus::Draft->value;
+
+        /** @var array<int, array<string, mixed>> $lines */
+        $lines = $this->data['expenseLines'] ?? [];
+
+        foreach ($lines as &$line) {
+            $line['amount'] = (int) ($line['quantity'] ?? 1) * (float) ($line['unit_price'] ?? 0);
+        }
+
+        $this->data['expenseLines'] = $lines;
+        $data['total_amount'] = collect($lines)
+            ->sum(fn (array $line): float => (float) $line['amount']);
 
         return $data;
     }

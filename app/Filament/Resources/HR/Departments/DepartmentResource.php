@@ -12,7 +12,6 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 use UnitEnum;
 
 class DepartmentResource extends Resource
@@ -51,11 +50,5 @@ class DepartmentResource extends Resource
         return [
             'index' => ManageDepartments::route('/'),
         ];
-    }
-
-    /** @return Builder<Department> */
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()->withCount('employees');
     }
 }

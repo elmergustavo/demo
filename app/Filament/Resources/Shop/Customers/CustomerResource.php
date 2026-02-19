@@ -44,9 +44,12 @@ class CustomerResource extends Resource
     }
 
     /** @return Builder<Customer> */
-    public static function getEloquentQuery(): Builder
+    public static function getRecordRouteBindingEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->with('addresses')->withoutGlobalScope(SoftDeletingScope::class);
+        return parent::getRecordRouteBindingEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 
     public static function getRelations(): array

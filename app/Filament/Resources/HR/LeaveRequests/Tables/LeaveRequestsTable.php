@@ -37,7 +37,9 @@ class LeaveRequestsTable
                     ->badge(),
 
                 SelectColumn::make('status')
-                    ->options(LeaveStatus::class),
+                    ->options(LeaveStatus::class)
+                    ->selectablePlaceholder(false)
+                    ->rules(['required']),
 
                 TextColumn::make('start_date')
                     ->date()

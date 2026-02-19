@@ -36,11 +36,13 @@ class EmployeeForm
                                 TextInput::make('email')
                                     ->required()
                                     ->email()
+                                    ->maxLength(255)
                                     ->unique(Employee::class, 'email', ignoreRecord: true),
 
                                 TextInput::make('phone')
                                     ->tel()
-                                    ->mask('(999) 999-9999'),
+                                    ->mask('(999) 999-9999')
+                                    ->maxLength(255),
 
                                 DatePicker::make('date_of_birth')
                                     ->maxDate(now()),
@@ -75,7 +77,8 @@ class EmployeeForm
                                     ->preload(),
 
                                 TextInput::make('job_title')
-                                    ->required(),
+                                    ->required()
+                                    ->maxLength(255),
 
                                 ToggleButtons::make('employment_type')
                                     ->options(EmploymentType::class)
