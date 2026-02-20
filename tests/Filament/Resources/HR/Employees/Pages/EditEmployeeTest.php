@@ -54,4 +54,10 @@ it('validates the form data', function (array $data, array $errors) {
     '`phone` is max 255 characters' => [['phone' => Str::random(256)], ['phone' => 'max']],
     '`job_title` is required' => [['job_title' => null], ['job_title' => 'required']],
     '`job_title` is max 255 characters' => [['job_title' => Str::random(256)], ['job_title' => 'max']],
+    '`employment_type` is required' => [['employment_type' => null], ['employment_type' => 'required']],
+    '`hire_date` is required' => [['hire_date' => null], ['hire_date' => 'required']],
+    '`salary` must not exceed 99999999.99' => [['employment_type' => 'full_time', 'salary' => 100000000], ['salary' => 'max']],
+    '`salary` must not be negative' => [['employment_type' => 'full_time', 'salary' => -1], ['salary' => 'min']],
+    '`hourly_rate` must not exceed 999999.99' => [['employment_type' => 'contractor', 'hourly_rate' => 1000000], ['hourly_rate' => 'max']],
+    '`hourly_rate` must not be negative' => [['employment_type' => 'contractor', 'hourly_rate' => -1], ['hourly_rate' => 'min']],
 ]);

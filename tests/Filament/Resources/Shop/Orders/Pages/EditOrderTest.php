@@ -98,3 +98,37 @@ it('validates the form data', function (array $data, array $errors) {
     '`status` is required' => [['status' => null], ['status' => 'required']],
     '`currency` is required' => [['currency' => null], ['currency' => 'required']],
 ]);
+
+it('validates order item numeric fields', function (array $itemData, array $errors) {
+    $undoRepeaterFake = Repeater::fake();
+
+    $customer = Customer::factory()->create();
+    $product = Product::factory()->create();
+    $record = Order::factory()->create(['customer_id' => $customer->id, 'currency' => 'usd']);
+    $record->orderItems()->create([
+        'product_id' => $product->id,
+        'qty' => 1,
+        'unit_price' => $product->price,
+        'sort' => 0,
+    ]);
+
+    Livewire::test(EditOrder::class, ['record' => $record->getRouteKey()])
+        ->fillForm([
+            'items' => [
+                [
+                    'product_id' => $product->id,
+                    'qty' => 2,
+                    'unit_price' => $product->price,
+                    ...$itemData,
+                ],
+            ],
+        ])
+        ->call('save')
+        ->assertHasFormErrors($errors);
+
+    $undoRepeaterFake();
+})->with([
+    '`qty` must be at least 1' => [['qty' => 0], ['items.0.qty' => 'min']],
+    '`qty` must not be negative' => [['qty' => -1], ['items.0.qty' => 'min']],
+    '`qty` must be an integer' => [['qty' => 1.5], ['items.0.qty' => 'integer']],
+]);

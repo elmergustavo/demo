@@ -50,6 +50,7 @@ it('validates the form data', function (array $data, array $errors) {
     '`status` is required' => [['status' => null], ['status' => 'required']],
     '`priority` is required' => [['priority' => null], ['priority' => 'required']],
     '`start_date` is required' => [['start_date' => null], ['start_date' => 'required']],
+    '`budget` is required' => [['budget' => null], ['budget' => 'required']],
     '`budget` must not exceed 9999999999.99' => [['budget' => 10000000000], ['budget' => 'max']],
     '`budget` must not be negative' => [['budget' => -1], ['budget' => 'min']],
     '`estimated_hours` must not exceed 9999999.9' => [['estimated_hours' => 10000000], ['estimated_hours' => 'max']],

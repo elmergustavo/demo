@@ -136,6 +136,7 @@ class ProjectForm
                             ->columns(2)
                             ->schema([
                                 TextInput::make('budget')
+                                    ->required()
                                     ->numeric()
                                     ->prefix('$')
                                     ->minValue(0)

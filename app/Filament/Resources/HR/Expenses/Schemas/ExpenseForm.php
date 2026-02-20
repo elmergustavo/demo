@@ -141,6 +141,7 @@ class ExpenseForm
                             ->dehydrated(),
 
                         Select::make('currency')
+                            ->required()
                             ->options([
                                 'USD' => 'USD',
                                 'EUR' => 'EUR',

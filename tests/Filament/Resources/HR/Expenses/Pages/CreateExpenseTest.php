@@ -149,6 +149,34 @@ it('validates expense line numeric fields', function (array $lineData, array $er
     '`unit_price` must not exceed 99999999.99' => [['unit_price' => 100000000], ['expenseLines.0.unit_price' => 'max']],
 ]);
 
+it('validates currency is required', function () {
+    $undoRepeaterFake = Repeater::fake();
+
+    $employee = Employee::factory()->create();
+
+    Livewire::test(CreateExpense::class)
+        ->fillForm([
+            'employee_id' => $employee->id,
+            'category' => ExpenseCategory::Travel,
+            'description' => 'Business trip expenses',
+            'expenseLines' => [
+                [
+                    'description' => 'Flight ticket',
+                    'quantity' => 1,
+                    'unit_price' => 250.00,
+                    'date' => now()->format('Y-m-d'),
+                ],
+            ],
+            'currency' => '',
+        ])
+        ->goToWizardStep(2)
+        ->goToWizardStep(3)
+        ->call('create')
+        ->assertHasFormErrors(['currency' => 'required']);
+
+    $undoRepeaterFake();
+});
+
 it('validates the form data', function (array $data, array $errors) {
     $employee = Employee::factory()->create();
 

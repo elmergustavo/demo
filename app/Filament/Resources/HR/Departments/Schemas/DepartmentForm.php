@@ -51,6 +51,7 @@ class DepartmentForm
                     ->columnSpanFull(),
 
                 TextInput::make('budget')
+                    ->required()
                     ->numeric()
                     ->prefix('$')
                     ->minValue(0)
@@ -58,6 +59,7 @@ class DepartmentForm
                     ->default(0),
 
                 TextInput::make('headcount_limit')
+                    ->required()
                     ->integer()
                     ->minValue(0)
                     ->maxValue(2147483647)

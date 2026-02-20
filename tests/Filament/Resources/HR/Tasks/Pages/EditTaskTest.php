@@ -51,4 +51,6 @@ it('validates the form data', function (array $data, array $errors) {
     '`project_id` is required' => [['project_id' => null], ['project_id' => 'required']],
     '`status` is required' => [['status' => null], ['status' => 'required']],
     '`priority` is required' => [['priority' => null], ['priority' => 'required']],
+    '`estimated_hours` must not exceed 99999.9' => [['estimated_hours' => 100000], ['estimated_hours' => 'max']],
+    '`estimated_hours` must not be negative' => [['estimated_hours' => -1], ['estimated_hours' => 'min']],
 ]);

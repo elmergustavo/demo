@@ -5,6 +5,7 @@ use App\Filament\Resources\HR\Expenses\Pages\EditExpense;
 use App\Models\HR\Employee;
 use App\Models\HR\Expense;
 use App\Models\HR\ExpenseLine;
+use Filament\Forms\Components\Repeater;
 use Illuminate\Support\Str;
 use Livewire\Livewire;
 
@@ -70,4 +71,41 @@ it('validates the form data', function (array $data, array $errors) {
     '`category` is required' => [['category' => null], ['category' => 'required']],
     '`description` is required' => [['description' => null], ['description' => 'required']],
     '`description` is max 65535 characters' => [['description' => Str::random(65536)], ['description' => 'max']],
+    '`currency` is required' => [['currency' => null], ['currency' => 'required']],
+]);
+
+it('validates expense line numeric fields', function (array $lineData, array $errors) {
+    $undoRepeaterFake = Repeater::fake();
+
+    $employee = Employee::factory()->create();
+    $record = Expense::factory()->for($employee, 'employee')->create();
+    $record->expenseLines()->create([
+        'description' => 'Item',
+        'quantity' => 1,
+        'unit_price' => 50.00,
+        'amount' => 50.00,
+        'date' => now(),
+    ]);
+
+    Livewire::test(EditExpense::class, ['record' => $record->getRouteKey()])
+        ->fillForm([
+            'expenseLines' => [
+                [
+                    'description' => 'Item',
+                    'quantity' => 1,
+                    'unit_price' => 50.00,
+                    'date' => now()->format('Y-m-d'),
+                    ...$lineData,
+                ],
+            ],
+        ])
+        ->call('save')
+        ->assertHasFormErrors($errors);
+
+    $undoRepeaterFake();
+})->with([
+    '`quantity` must be at least 1' => [['quantity' => 0], ['expenseLines.0.quantity' => 'min']],
+    '`quantity` must not be negative' => [['quantity' => -1], ['expenseLines.0.quantity' => 'min']],
+    '`unit_price` must not be negative' => [['unit_price' => -1], ['expenseLines.0.unit_price' => 'min']],
+    '`unit_price` must not exceed 99999999.99' => [['unit_price' => 100000000], ['expenseLines.0.unit_price' => 'max']],
 ]);

@@ -144,6 +144,7 @@ class CreateExpense extends CreateRecord
                         ->dehydrated(),
 
                     Select::make('currency')
+                        ->required()
                         ->options([
                             'USD' => 'USD',
                             'EUR' => 'EUR',

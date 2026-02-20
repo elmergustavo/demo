@@ -70,6 +70,7 @@ class TimesheetForm
                             }),
 
                         TextInput::make('minutes')
+                            ->required()
                             ->integer()
                             ->minValue(0)
                             ->maxValue(59)
@@ -83,6 +84,7 @@ class TimesheetForm
                             ->columnSpanFull(),
 
                         TextInput::make('hourly_rate')
+                            ->required()
                             ->numeric()
                             ->prefix('$')
                             ->minValue(0)
