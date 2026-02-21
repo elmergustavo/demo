@@ -9,7 +9,6 @@ use Filament\Support\Enums\FontWeight;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
-use Squire\Models\Currency;
 
 class LatestOrders extends BaseWidget
 {
@@ -38,7 +37,6 @@ class LatestOrders extends BaseWidget
                 TextColumn::make('status')
                     ->badge(),
                 TextColumn::make('currency')
-                    ->getStateUsing(fn ($record): ?string => Currency::find($record->currency)->name ?? null)
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('total_price')

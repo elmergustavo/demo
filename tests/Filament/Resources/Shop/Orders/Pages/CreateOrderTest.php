@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\CurrencyCode;
 use App\Enums\OrderStatus;
 use App\Filament\Resources\Shop\Orders\Pages\CreateOrder;
 use App\Models\Shop\Customer;
@@ -23,7 +24,7 @@ it('can create a record', function () {
         ->fillForm([
             'customer_id' => $customer->id,
             'status' => OrderStatus::New,
-            'currency' => 'usd',
+            'currency' => CurrencyCode::Usd,
             'items' => [
                 [
                     'product_id' => $product->id,
@@ -51,7 +52,7 @@ it('sends database notification after order creation', function () {
         ->fillForm([
             'customer_id' => $customer->id,
             'status' => OrderStatus::New,
-            'currency' => 'usd',
+            'currency' => CurrencyCode::Usd,
             'items' => [
                 [
                     'product_id' => $product->id,
@@ -81,7 +82,7 @@ it('validates order item numeric fields', function (array $itemData, array $erro
         ->fillForm([
             'customer_id' => $customer->id,
             'status' => OrderStatus::New,
-            'currency' => 'usd',
+            'currency' => CurrencyCode::Usd,
             'items' => [
                 [
                     'product_id' => $product->id,
@@ -108,7 +109,7 @@ it('validates the form data', function (array $data, array $errors) {
         ->fillForm([
             'customer_id' => $customer->id,
             'status' => OrderStatus::New,
-            'currency' => 'usd',
+            'currency' => CurrencyCode::Usd,
             ...$data,
         ])
         ->call('create')

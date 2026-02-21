@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\CurrencyCode;
 use App\Enums\OrderStatus;
 use App\Filament\Resources\Shop\Orders\Pages\EditOrder;
 use App\Models\Shop\Customer;
@@ -21,7 +22,7 @@ it('can update a record', function () {
 
     $customer = Customer::factory()->create();
     $product = Product::factory()->create();
-    $record = Order::factory()->create(['customer_id' => $customer->id, 'currency' => 'usd']);
+    $record = Order::factory()->create(['customer_id' => $customer->id, 'currency' => CurrencyCode::Usd->value]);
     $record->orderItems()->create([
         'product_id' => $product->id,
         'qty' => 1,
@@ -53,7 +54,7 @@ it('can replicate an order with new number and reset status', function () {
     $record = Order::factory()->create([
         'customer_id' => $customer->id,
         'status' => OrderStatus::Processing,
-        'currency' => 'usd',
+        'currency' => CurrencyCode::Usd->value,
     ]);
     $record->orderItems()->create([
         'product_id' => $product->id,
@@ -78,7 +79,7 @@ it('can replicate an order with new number and reset status', function () {
 it('validates the form data', function (array $data, array $errors) {
     $customer = Customer::factory()->create();
     $product = Product::factory()->create();
-    $record = Order::factory()->create(['customer_id' => $customer->id, 'currency' => 'usd']);
+    $record = Order::factory()->create(['customer_id' => $customer->id, 'currency' => CurrencyCode::Usd->value]);
     $record->orderItems()->create([
         'product_id' => $product->id,
         'qty' => 1,
@@ -104,7 +105,7 @@ it('validates order item numeric fields', function (array $itemData, array $erro
 
     $customer = Customer::factory()->create();
     $product = Product::factory()->create();
-    $record = Order::factory()->create(['customer_id' => $customer->id, 'currency' => 'usd']);
+    $record = Order::factory()->create(['customer_id' => $customer->id, 'currency' => CurrencyCode::Usd->value]);
     $record->orderItems()->create([
         'product_id' => $product->id,
         'qty' => 1,

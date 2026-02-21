@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Shop\Orders\Schemas;
 
+use App\Enums\CurrencyCode;
 use App\Enums\OrderStatus;
 use App\Filament\Resources\Shop\Products\ProductResource;
 use App\Forms\Components\AddressForm;
@@ -22,7 +23,6 @@ use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Filament\Support\Enums\Width;
 use Filament\Support\Icons\Heroicon;
-use Squire\Models\Currency;
 
 class OrderForm
 {
@@ -113,9 +113,8 @@ class OrderForm
                 ->required(),
 
             Select::make('currency')
+                ->options(CurrencyCode::class)
                 ->searchable()
-                ->getSearchResultsUsing(fn (string $query) => Currency::where('name', 'like', "%{$query}%")->pluck('name', 'id'))
-                ->getOptionLabelUsing(fn ($value): ?string => Currency::firstWhere('id', $value)?->getAttribute('name'))
                 ->required(),
 
             AddressForm::make('address')

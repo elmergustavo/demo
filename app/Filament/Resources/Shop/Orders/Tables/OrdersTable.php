@@ -22,7 +22,6 @@ use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
-use Squire\Models\Currency;
 
 class OrdersTable
 {
@@ -41,7 +40,6 @@ class OrdersTable
                 TextColumn::make('status')
                     ->badge(),
                 TextColumn::make('currency')
-                    ->getStateUsing(fn ($record): ?string => Currency::find($record->currency)->name ?? null)
                     ->searchable()
                     ->sortable()
                     ->toggleable(),

@@ -29,7 +29,7 @@ class ExpenseLineFactory extends Factory
             'quantity' => $quantity,
             'unit_price' => $unitPrice,
             'amount' => $quantity * $unitPrice,
-            'date' => $this->faker->dateTimeBetween('-3 months', 'now'),
+            'date' => $this->faker->dateTimeBetween('-12 months', 'now'),
         ];
     }
 }

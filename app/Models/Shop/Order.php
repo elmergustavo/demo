@@ -2,6 +2,7 @@
 
 namespace App\Models\Shop;
 
+use App\Enums\CurrencyCode;
 use App\Enums\OrderStatus;
 use Database\Factories\Shop\OrderFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -37,6 +38,7 @@ class Order extends Model
     ];
 
     protected $casts = [
+        'currency' => CurrencyCode::class,
         'status' => OrderStatus::class,
     ];
 

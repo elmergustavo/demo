@@ -21,6 +21,8 @@ class ExpenseFactory extends Factory
     {
         $status = $this->faker->randomElement(ExpenseStatus::cases());
 
+        $createdAt = $this->faker->dateTimeBetween('-12 months', 'now');
+
         return [
             'expense_number' => 'EXP-' . str_pad((string) $this->faker->unique()->numberBetween(1, 999999), 6, '0', STR_PAD_LEFT),
             'status' => $status,
@@ -29,12 +31,14 @@ class ExpenseFactory extends Factory
             'total_amount' => 0,
             'currency' => $this->faker->randomElement(['USD', 'USD', 'USD', 'EUR', 'GBP', 'CAD']),
             'submitted_at' => in_array($status, [ExpenseStatus::Submitted, ExpenseStatus::Approved, ExpenseStatus::Reimbursed])
-                ? $this->faker->dateTimeBetween('-3 months', 'now')
+                ? $this->faker->dateTimeBetween($createdAt, 'now')
                 : null,
             'approved_at' => in_array($status, [ExpenseStatus::Approved, ExpenseStatus::Reimbursed])
-                ? $this->faker->dateTimeBetween('-2 months', 'now')
+                ? $this->faker->dateTimeBetween($createdAt, 'now')
                 : null,
             'notes' => $this->faker->optional(0.3)->sentence(),
+            'created_at' => $createdAt,
+            'updated_at' => $this->faker->dateTimeBetween($createdAt, 'now'),
         ];
     }
 }

@@ -2,7 +2,8 @@
 
 namespace App\Filament\Resources\Shop\Customers\RelationManagers;
 
-use Akaunting\Money\Currency;
+use App\Enums\CurrencyCode;
+use App\Enums\PaymentMethod;
 use App\Filament\Resources\Shop\Orders\OrderResource;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
@@ -52,7 +53,7 @@ class PaymentsRelationManager extends RelationManager
                     ->required(),
 
                 Select::make('currency')
-                    ->options(collect(Currency::getCurrencies())->mapWithKeys(fn ($item, $key) => [$key => data_get($item, 'name')]))
+                    ->options(CurrencyCode::class)
                     ->searchable()
                     ->required(),
 
@@ -67,11 +68,7 @@ class PaymentsRelationManager extends RelationManager
 
                 ToggleButtons::make('method')
                     ->inline()
-                    ->options([
-                        'credit_card' => 'Credit card',
-                        'bank_transfer' => 'Bank transfer',
-                        'paypal' => 'PayPal',
-                    ])
+                    ->options(PaymentMethod::class)
                     ->required(),
             ]);
     }
@@ -93,7 +90,7 @@ class PaymentsRelationManager extends RelationManager
 
                         TextColumn::make('amount')
                             ->sortable()
-                            ->money(fn ($record) => $record->currency),
+                            ->money(fn ($record) => $record->currency->value),
                     ]),
 
                 ColumnGroup::make('Context')
