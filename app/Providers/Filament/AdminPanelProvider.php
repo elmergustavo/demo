@@ -54,8 +54,6 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->spa()
-            ->colors([
-                'primary' => Color::Blue,
-            ]);
+            ->font('Albert Sans');
     }
 }
