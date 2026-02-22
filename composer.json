@@ -20,11 +20,11 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.8",
         "squirephp/countries-en": "^3.3",
+        "fakerphp/faker": "^1.9.1",
         "squirephp/currencies-en": "^3.3"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
-        "fakerphp/faker": "^1.9.1",
         "larastan/larastan": "^3.1",
         "laravel/boost": "^2.2",
         "laravel/pint": "^1.0",
