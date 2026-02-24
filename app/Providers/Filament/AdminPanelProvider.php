@@ -30,8 +30,8 @@ class AdminPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
-            ->brandLogo(fn () => view('filament.app.logo'))
-            ->brandLogoHeight('1.25rem')
+            ->brandLogo(url('images/logo/dark.svg'))
+            ->darkModeBrandLogo(url('images/logo/primary.svg'))
             ->navigationGroups([
                 'Shop',
                 'HR',
